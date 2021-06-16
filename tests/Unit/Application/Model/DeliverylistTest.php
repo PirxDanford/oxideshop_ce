@@ -77,7 +77,6 @@ class oxDb_noActiveSnippetInDeliveryList extends oxDb
     }
 }
 
-
 class DeliverylistTest extends \OxidTestCase
 {
     /** @var oxUser */
@@ -95,9 +94,6 @@ class DeliverylistTest extends \OxidTestCase
     /** @var array  */
     protected $_aDeliveries = array();
 
-    /**
-     * Initialize the fixture.
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -105,7 +101,7 @@ class DeliverylistTest extends \OxidTestCase
         // set to load full deliveries list
         $this->getConfig()->setConfigParam('bl_perfLoadDelivery', true);
 
-        oxAddClassModule(\OxidEsales\EshopCommunity\Tests\Unit\Application\Model\oxDeliveryListTestClass::class, 'oxDeliveryList');
+        $this->addClassExtension(\OxidEsales\EshopCommunity\Tests\Unit\Application\Model\oxDeliveryListTestClass::class, 'oxDeliveryList');
 
         // inserting some demo data
 
@@ -204,16 +200,8 @@ class DeliverylistTest extends \OxidTestCase
         oxArticleHelper::cleanup();
     }
 
-    /**
-     * Tear down the fixture.
-     *
-     * @return null
-     */
     protected function tearDown(): void
     {
-        oxRemClassModule(\OxidEsales\EshopCommunity\Tests\Unit\Application\Model\oxDeliveryListTestClass::class);
-        oxRemClassModule(\OxidEsales\EshopCommunity\Tests\Unit\Application\Model\oxDb_noActiveSnippetInDeliveryList::class);
-
         $this->cleanUpTable('oxdel2delset');
         $this->cleanUpTable('oxobject2category');
         $this->cleanUpTable('oxobject2delivery');

@@ -198,9 +198,6 @@ class oxUtilsNoCaching extends oxUtils
     }
 }
 
-/**
- * Testing oxBase class.
- */
 class BaseTest extends \OxidTestCase
 {
     private static $count = 0;
@@ -230,9 +227,6 @@ class BaseTest extends \OxidTestCase
         $this->cleanUpTable('oxcategories');
         $this->cleanUpTable('oxdiscount');
         $this->cleanUpTable('oxorder');
-
-        oxRemClassModule('modoxCacheAdminForBase');
-        oxRemClassModule('modoxCacheForBase');
 
         parent::teardown();
     }

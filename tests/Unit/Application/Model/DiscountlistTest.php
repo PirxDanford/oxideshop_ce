@@ -7,28 +7,18 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Application\Model;
 
-use \oxField;
+use oxField;
+use oxRegistry;
 use OxidEsales\Eshop\Core\TableViewNameGenerator;
-use \oxRegistry;
-use \oxTestModules;
 
-/**
- * OxDiscountList tester
- */
 class DiscountlistTest extends \OxidTestCase
 {
     public $aDiscountIds = array();
     public $aDiscountArtIds = array();
     public $aTransparentDiscountArtIds = array();
 
-    /**
-     * Tear down the fixture.
-     *
-     * @return null
-     */
     protected function tearDown(): void
     {
-        oxRemClassModule('modOxUtilsDate');
         $this->cleanUpTable('oxobject2discount');
         $this->cleanUpTable('oxcategories');
         parent::tearDown();
