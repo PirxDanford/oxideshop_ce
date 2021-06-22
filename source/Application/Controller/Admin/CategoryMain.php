@@ -7,16 +7,8 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
-use oxRegistry;
-use oxField;
+use OxidEsales\Eshop\Core\Registry;
 use stdClass;
-use oxCategory;
-use oxUtilsPic;
-use oxUtilsFile;
-use oxExceptionToDisplay;
-use oxDbMetaDataHandler;
-use oxUtilsView;
-use category_main_ajax;
 
 /**
  * Admin article main categories manager.
@@ -92,7 +84,7 @@ class CategoryMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 
         $this->_aViewData["sortableFields"] = $this->getSortableFields();
 
-        if (\OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter("aoc")) {
+        if (Registry::getRequest()->getRequestEscapedParameter("aoc")) {
             /** @var \OxidEsales\Eshop\Application\Controller\Admin\CategoryMainAjax $oCategoryMainAjax */
             $oCategoryMainAjax = oxNew(\OxidEsales\Eshop\Application\Controller\Admin\CategoryMainAjax::class);
             $this->_aViewData['oxajax'] = $oCategoryMainAjax->getColumns();
@@ -140,12 +132,10 @@ class CategoryMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
     {
         parent::save();
 
-        $myConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
-
         $soxId = $this->getEditObjectId();
 
         $aParams = $this->_parseRequestParametersForSave(
-            $myConfig->getRequestParameter("editval")
+            Registry::getRequest()->getRequestEscapedParameter("editval")
         );
 
         /** @var \OxidEsales\Eshop\Application\Model\Category $oCategory */
@@ -213,7 +203,7 @@ class CategoryMain extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
         }
 
         $sOxId = $this->getEditObjectId();
-        $sField = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('masterPicField');
+        $sField = Registry::getRequest()->getRequestEscapedParameter('masterPicField');
         if (empty($sField)) {
             return;
         }

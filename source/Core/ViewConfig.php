@@ -121,7 +121,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActContentLoadId()
     {
-        $sTplName = Registry::getConfig()->getRequestParameter('oxloadid');
+        $sTplName = Registry::getRequest()->getRequestEscapedParameter('oxloadid');
         // #M1176: Logout from CMS page
         if (!$sTplName && Registry::getConfig()->getTopActiveView()) {
             $sTplName = Registry::getConfig()->getTopActiveView()->getViewConfig()->getViewConfigParam('oxloadid');
@@ -137,7 +137,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActTplName()
     {
-        return Registry::getConfig()->getRequestParameter('tpl');
+        return Registry::getRequest()->getRequestEscapedParameter('tpl');
     }
 
     /**
@@ -229,7 +229,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActCatId()
     {
-        return Registry::getConfig()->getRequestParameter('cnid');
+        return Registry::getRequest()->getRequestEscapedParameter('cnid');
     }
 
     /**
@@ -239,7 +239,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActArticleId()
     {
-        return Registry::getConfig()->getRequestParameter('anid');
+        return Registry::getRequest()->getRequestEscapedParameter('anid');
     }
 
     /**
@@ -249,7 +249,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActSearchParam()
     {
-        return Registry::getConfig()->getRequestParameter('searchparam');
+        return Registry::getRequest()->getRequestEscapedParameter('searchparam');
     }
 
     /**
@@ -261,7 +261,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActRecommendationId()
     {
-        return Registry::getConfig()->getRequestParameter('recommid');
+        return Registry::getRequest()->getRequestEscapedParameter('recommid');
     }
 
     /**
@@ -271,7 +271,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActListType()
     {
-        return Registry::getConfig()->getRequestParameter('listtype');
+        return Registry::getRequest()->getRequestEscapedParameter('listtype');
     }
 
     /**
@@ -281,7 +281,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getActManufacturerId()
     {
-        return Registry::getConfig()->getRequestParameter('mnid');
+        return Registry::getRequest()->getRequestEscapedParameter('mnid');
     }
 
     /**
@@ -291,7 +291,7 @@ class ViewConfig extends \OxidEsales\Eshop\Core\Base
      */
     public function getContentId()
     {
-        return Registry::getConfig()->getRequestParameter('oxcid');
+        return Registry::getRequest()->getRequestEscapedParameter('oxcid');
     }
 
     /**

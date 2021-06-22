@@ -8,7 +8,6 @@
 namespace OxidEsales\EshopCommunity\Application\Model;
 
 use Exception;
-use oxField;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Str;
@@ -1601,7 +1600,7 @@ class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
 
         if (self::$_aSelections[$sId]) {
             // marking active from filter
-            $aFilter = ($aFilter === null) ? \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter("sel") : $aFilter;
+            $aFilter = ($aFilter === null) ? Registry::getRequest()->getRequestEscapedParameter("sel") : $aFilter;
             if ($aFilter) {
                 $iSelIdx = 0;
                 foreach (self::$_aSelections[$sId] as $oSelection) {
@@ -2326,8 +2325,8 @@ class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
         $iActPicId = 1;
         $sActPic = $this->getPictureUrl($iActPicId);
 
-        if (\OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('actpicid')) {
-            $iActPicId = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('actpicid');
+        if (Registry::getRequest()->getRequestEscapedParameter('actpicid')) {
+            $iActPicId = Registry::getRequest()->getRequestEscapedParameter('actpicid');
         }
 
         $oStr = Str::getStr();
@@ -2865,10 +2864,10 @@ class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
     {
         if ($this->_sMoreDetailLink == null) {
             // and assign special article values
-            $this->_sMoreDetailLink = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopHomeUrl() . 'cl=moredetails';
+            $this->_sMoreDetailLink = Registry::getConfig()->getShopHomeUrl() . 'cl=moredetails';
 
             // not always it is okey, as not all the time active category is the same as primary article cat.
-            if ($sActCat = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('cnid')) {
+            if ($sActCat = Registry::getRequest()->getRequestEscapedParameter('cnid')) {
                 $this->_sMoreDetailLink .= '&amp;cnid=' . $sActCat;
             }
             $this->_sMoreDetailLink .= '&amp;anid=' . $this->getId();
@@ -2885,29 +2884,29 @@ class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
     public function getToBasketLink()
     {
         if ($this->_sToBasketLink == null) {
-            $myConfig = \OxidEsales\Eshop\Core\Registry::getConfig();
+            $myConfig = Registry::getConfig();
 
-            if (\OxidEsales\Eshop\Core\Registry::getUtils()->isSearchEngine()) {
+            if (Registry::getUtils()->isSearchEngine()) {
                 $this->_sToBasketLink = $this->getLink();
             } else {
                 // and assign special article values
                 $this->_sToBasketLink = $myConfig->getShopHomeUrl();
 
                 // override some classes as these should never showup
-                $actControllerId = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestControllerId();
+                $actControllerId = Registry::getConfig()->getRequestControllerId();
                 if ($actControllerId == 'thankyou') {
                     $actControllerId = 'basket';
                 }
                 $this->_sToBasketLink .= 'cl=' . $actControllerId;
 
                 // this is not very correct
-                if ($sActCat = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('cnid')) {
+                if ($sActCat = Registry::getRequest()->getRequestEscapedParameter('cnid')) {
                     $this->_sToBasketLink .= '&amp;cnid=' . $sActCat;
                 }
 
                 $this->_sToBasketLink .= '&amp;fnc=tobasket&amp;aid=' . $this->getId() . '&amp;anid=' . $this->getId();
 
-                if ($sTpl = basename(\OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('tpl'))) {
+                if ($sTpl = basename(Registry::getRequest()->getRequestEscapedParameter('tpl'))) {
                     $this->_sToBasketLink .= '&amp;tpl=' . $sTpl;
                 }
             }
