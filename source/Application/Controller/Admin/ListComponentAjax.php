@@ -8,6 +8,7 @@
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
 use OxidEsales\Eshop\Core\Str;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EshopCommunity\Internal\Transition\ShopEvents\AfterAdminAjaxRequestProcessedEvent;
 
 /**
@@ -536,7 +537,12 @@ class ListComponentAjax extends \OxidEsales\Eshop\Core\Base
      */
     protected function _getViewName($sTable) // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     {
-        return getViewName($sTable, \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('editlanguage'));
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+
+        return $tableViewNameGenerator->getViewName(
+            $sTable,
+            \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('editlanguage')
+        );
     }
 
     /**

@@ -13,6 +13,7 @@ use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
 use OxidEsales\Eshop\Core\Str;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 
 /**
  * List of articles for a selected product group.
@@ -757,7 +758,8 @@ class ArticleListController extends \OxidEsales\Eshop\Application\Controller\Fro
         $category = $this->getActiveCategory();
         if ($category && $category instanceof Category) {
             if ($defaultSorting = $category->getDefaultSorting()) {
-                $articleViewName = getViewName('oxarticles');
+                $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+                $articleViewName = $tableViewNameGenerator->getViewName('oxarticles');
                 $sortBy = $articleViewName . '.' . $defaultSorting;
                 $sortDirection = ($category->getDefaultSortingMode()) ? "desc" : "asc";
                 $sorting = ['sortby' => $sortBy, 'sortdir' => $sortDirection];

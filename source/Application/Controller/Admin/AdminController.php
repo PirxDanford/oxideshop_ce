@@ -10,6 +10,7 @@ namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 use OxidEsales\Eshop\Core\Edition\EditionSelector;
 use OxidEsales\Eshop\Core\ShopVersion;
 use oxDb;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use oxNavigationTree;
 use oxShop;
 
@@ -436,7 +437,8 @@ class AdminController extends \OxidEsales\Eshop\Core\Controller\BaseController
             $aLangIds = \OxidEsales\Eshop\Core\Registry::getLang()->getLanguageIds();
             $iEnglishId = array_search("en", $aLangIds);
             if (false !== $iEnglishId) {
-                $sViewName = getViewName("oxcountry", $iEnglishId);
+                $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+                $sViewName = $tableViewNameGenerator->getViewName("oxcountry", $iEnglishId);
                 $sQ = "select oxtitle from {$sViewName} where oxisoalpha2 = :oxisoalpha2";
                 // Value does not change that often, reading from slave is ok here (see ESDEV-3804 and ESDEV-3822).
                 $sCountryName = \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->getOne($sQ, [

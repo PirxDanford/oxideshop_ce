@@ -7,6 +7,7 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use oxRegistry;
 use oxDb;
 
@@ -71,7 +72,8 @@ class ContentList extends \OxidEsales\Eshop\Application\Controller\Admin\AdminLi
     {
         $sQ = parent::_prepareWhereQuery($aWhere, $sqlFull);
         $sFolder = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('folder');
-        $sViewName = getviewName("oxcontents");
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sViewName = $tableViewNameGenerator->getViewName("oxcontents");
 
         //searchong for empty oxfolder fields
         if ($sFolder == 'CMSFOLDER_NONE' || $sFolder == 'CMSFOLDER_NONE_RR') {

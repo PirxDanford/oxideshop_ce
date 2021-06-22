@@ -7,6 +7,7 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use oxRegistry;
 use oxDb;
 use oxField;
@@ -268,8 +269,8 @@ class ArticleExtend extends \OxidEsales\Eshop\Application\Controller\Admin\Admin
     {
         $database = \OxidEsales\Eshop\Core\DatabaseProvider::getDB();
         $config = \OxidEsales\Eshop\Core\Registry::getConfig();
-
-        $articleTable = getViewName('oxarticles', $this->_iEditLang);
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $articleTable = $tableViewNameGenerator->getViewName('oxarticles', $this->_iEditLang);
         $query = "select {$articleTable}.oxtitle, {$articleTable}.oxartnum, {$articleTable}.oxvarselect " .
             "from {$articleTable} where 1 ";
         // #546

@@ -7,6 +7,8 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
+
 /**
  * Admin order article manager.
  * Collects order articles information, updates it on user submit, etc.
@@ -124,7 +126,8 @@ class OrderArticle extends \OxidEsales\Eshop\Application\Controller\Admin\AdminD
 
             //get article id
             $oDb = \OxidEsales\Eshop\Core\DatabaseProvider::getDb(\OxidEsales\Eshop\Core\DatabaseProvider::FETCH_MODE_ASSOC);
-            $sTable = getViewName("oxarticles");
+            $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+            $sTable = $tableViewNameGenerator->getViewName("oxarticles");
             $sQ = "select oxid, oxparentid from $sTable where oxartnum = :oxartnum limit 1";
 
             $rs = $oDb->select($sQ, [

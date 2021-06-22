@@ -7,6 +7,7 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use oxRegistry;
 use oxField;
 use stdClass;
@@ -36,7 +37,8 @@ class ArticleVariant extends \OxidEsales\Eshop\Application\Controller\Admin\Admi
         parent::render();
 
         $soxId = $this->getEditObjectId();
-        $sSLViewName = getViewName('oxselectlist');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sSLViewName = $tableViewNameGenerator->getViewName('oxselectlist');
 
         // all selectlists
         $oAllSel = oxNew(\OxidEsales\Eshop\Core\Model\ListModel::class);

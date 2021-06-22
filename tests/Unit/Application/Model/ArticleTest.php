@@ -11,6 +11,7 @@ use OxidEsales\Eshop\Core\Config;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Application\Model\Order;
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EshopCommunity\Core\ShopIdCalculator;
 use \oxArticle;
 use oxArticleHelper;
@@ -1923,7 +1924,8 @@ class ArticleTest extends \OxidTestCase
         $sSelect = $oArticle->UNITgenerateSearchStrForCustomerBought();
 
         $sArtTable = $oArticle->UNITgetObjectViewName('oxarticles');
-        $sOrderArtTable = getViewName('oxorderarticles');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sOrderArtTable = $tableViewNameGenerator->getViewName('oxorderarticles');
 
         $sExpSelect = "select distinct {$sArtTable}.* from (
                    select d.oxorderid as suborderid from {$sOrderArtTable} as d use index ( oxartid ) where d.oxartid in ( '_testArt', '_testVar' ) limit 50
@@ -1952,7 +1954,8 @@ class ArticleTest extends \OxidTestCase
         $sSelect = $oVariant->UNITgenerateSearchStrForCustomerBought();
 
         $sArtTable = $oVariant->UNITgetObjectViewName('oxarticles');
-        $sOrderArtTable = getViewName('oxorderarticles');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sOrderArtTable = $tableViewNameGenerator->getViewName('oxorderarticles');
 
         $sExpSelect = "select distinct {$sArtTable}.* from (
                    select d.oxorderid as suborderid from {$sOrderArtTable} as d use index ( oxartid ) where d.oxartid in ( '_testVar', '_testArt' )  limit 50
@@ -1990,7 +1993,8 @@ class ArticleTest extends \OxidTestCase
         $sSelect = $oArticle->UNITgenerateSearchStrForCustomerBought();
 
         $sArtTable = $oArticle->UNITgetObjectViewName('oxarticles');
-        $sOrderArtTable = getViewName('oxorderarticles');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sOrderArtTable = $tableViewNameGenerator->getViewName('oxorderarticles');
 
         $sExpSelect = "select distinct {$sArtTable}.* from (
                    select d.oxorderid as suborderid from {$sOrderArtTable} as d use index ( oxartid ) where d.oxartid in ( '_testVar', '_testArt', '_testArt2' ) limit 50
@@ -2728,8 +2732,9 @@ class ArticleTest extends \OxidTestCase
      */
     public function testGenerateSearchStr()
     {
-        $sCatView = getViewName('oxcategories');
-        $sO2CView = getViewName('oxobject2category');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sCatView = $tableViewNameGenerator->getViewName('oxcategories');
+        $sO2CView = $tableViewNameGenerator->getViewName('oxobject2category');
 
         $oArticle = $this->_createArticle('_testArt');
 
@@ -2748,7 +2753,8 @@ class ArticleTest extends \OxidTestCase
      */
     public function testGenerateSearchStrWithSearchPriceCat()
     {
-        $sCatView = getViewName('oxcategories');
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+        $sCatView = $tableViewNameGenerator->getViewName('oxcategories');
         $oArticle = $this->_createArticle('_testArt');
 
         $oArticle->oxarticles__oxprice = new oxField(5, oxField::T_RAW);

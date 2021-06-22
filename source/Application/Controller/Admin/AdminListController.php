@@ -7,6 +7,7 @@
 
 namespace OxidEsales\EshopCommunity\Application\Controller\Admin;
 
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use oxRegistry;
 use oxDb;
 use oxField;
@@ -325,7 +326,8 @@ class AdminListController extends \OxidEsales\Eshop\Application\Controller\Admin
             $descending = $descending !== null ? (bool)$descending : $this->_blDesc;
 
             foreach ($sortFields as $table => $fieldData) {
-                $table = $table ? (getViewName($table, $languageId) . '.') : '';
+                $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+                $table = $table ? ($tableViewNameGenerator->getViewName($table, $languageId) . '.') : '';
                 foreach ($fieldData as $column => $sortDirectory) {
                     $field = $table . $column;
 
@@ -511,7 +513,8 @@ class AdminListController extends \OxidEsales\Eshop\Application\Controller\Admin
                             $field = "{$table}__{$name}";
 
                             // if no table name attached to field name, add it
-                            $name = $table ? getViewName($table, $languageId) . ".{$name}" : $name;
+                            $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+                            $name = $table ? $tableViewNameGenerator->getViewName($table, $languageId) . ".{$name}" : $name;
 
                             // #M1260: if field is date
                             if ($localDateFormat && $localDateFormat != 'ISO' && isset($listItem->$field)) {
@@ -785,7 +788,8 @@ class AdminListController extends \OxidEsales\Eshop\Application\Controller\Admin
             $listObject = $this->_oList->getBaseObject();
 
             \OxidEsales\Eshop\Core\Registry::getSession()->setVariable('tabelle', $this->_sListClass);
-            $this->_aViewData['listTable'] = getViewName($listObject->getCoreTableName());
+            $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+            $this->_aViewData['listTable'] = $tableViewNameGenerator->getViewName($listObject->getCoreTableName());
             \OxidEsales\Eshop\Core\Registry::getConfig()->setGlobalParameter('ListCoreTable', $listObject->getCoreTableName());
 
             if ($listObject->isMultilang()) {
