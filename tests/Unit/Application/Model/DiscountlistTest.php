@@ -11,6 +11,7 @@ use oxField;
 use oxRegistry;
 use OxidEsales\Eshop\Core\TableViewNameGenerator;
 
+
 class DiscountlistTest extends \OxidTestCase
 {
     public $aDiscountIds = array();
